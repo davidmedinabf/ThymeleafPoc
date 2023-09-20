@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style th:inline="text">
+        /* Import Google Fonts */
+        @import url(https://themes.googleusercontent.com/fonts/css?kit=1ZpBgFLQKwrA6c9iLOONVLLukJZ0tncL9DlcRrH6sPk);
+
+        ol {
+            margin: 0;
+            padding: 0;
+        }
+
+        table td,
+        table th {
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<p>
+        <span>
+            <img alt="" th:src="${logo}">
+        </span>
+</p>
+<p></p>
+<p></p>
+<p>
+    <span>BLANKFACTOR COLOMBIA S.A.S with NIT 901.383.869-4</span>
+    <span th:if="${certificate.addressedTo}"><p><span th:text="${certificate.addressedTo}"></span></p></span>
+</p>
+<p></p>
+<p><span>CERTIFIES</span></p>
+<p></p>
+<p></p>
+<p>
+    <span th:text="${employee.names}"></span>
+    <span>, identified with citizenship card No. </span>
+    <span th:text="${employee.governmentId}"></span>
+    <span>&nbsp;is currently working in the company, performing the position of </span>
+    <span th:text="${employee.position}"></span>
+    <span>&nbsp;since </span>
+    <span th:text="${employee.startDate}"></span>
+    <span>&nbsp;with an indefinite term contract</span>
+
+    <span th:if="${certificate.withSalary}"> and earning a monthly salary of
+    <span th:text="${employee.salaryInLetters}"></span>
+    <span>&nbsp;M.L. $</span>
+    <span th:text="${employee.salaryInNumbers}"></span></span>
+</p>
+<p></p>
+<p></p>
+<p>
+    <span>For the record of the foregoing was signed in Medellín on</span>
+    <span th:text="${certificate.expeditionDate}"></span>
+    <span>.</span>
+</p>
+<p></p>
+<p><span>Sincerely, </span></p>
+<p></p>
+<p>
+        <span>
+            <img alt="" th:src="${signer.signature}" title="">
+        </span>
+</p>
+<p></p>
+<p></p>
+<p><span th:text="${signer.name}"></span></p>
+<p><span th:text="${signer.position}"></span></p>
+<p><span th:text="${signer.email}"></span></p>
+</body>
+</html>
