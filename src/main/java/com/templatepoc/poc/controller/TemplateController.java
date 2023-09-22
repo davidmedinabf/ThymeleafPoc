@@ -6,30 +6,25 @@ import java.util.Map;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
-import com.templatepoc.poc.repository.TemplateRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @RestController
 public class TemplateController {
-
     private final TemplateEngine templateEngine;
-    private final TemplateRepository templateRepository;
 
-    public TemplateController(TemplateEngine templateEngine, TemplateRepository templateRepository) {
+    public TemplateController(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
-        this.templateRepository = templateRepository;
     }
 
-
-    @RequestMapping("/welcome/{userType}")
-    public  ResponseEntity<?> viewFromDbTemplate(@PathVariable String userType) {
+    @GetMapping("/certificate/{certificateName}")
+    public  ResponseEntity<?> viewFromDbTemplate(@PathVariable String certificateName) {
 
         Context context = new Context();
 
@@ -61,14 +56,14 @@ public class TemplateController {
 
         context.setVariable("signer", signer);
 
-        String orderHtml = templateEngine.process(userType, context);
+        String templateHtml = templateEngine.process(certificateName, context);
 
         ByteArrayOutputStream target = new ByteArrayOutputStream();
         ConverterProperties converterProperties = new ConverterProperties();
         converterProperties.setBaseUri("http://localhost:8080");
 
         /* Call convert to PDF method  */
-        HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
+        HtmlConverter.convertToPdf(templateHtml, target, converterProperties);
 
         /* extract output as bytes */
         byte[] bytes = target.toByteArray();
@@ -78,8 +73,6 @@ public class TemplateController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(bytes);
 
-
-        //return  userType;
     }
 
 
